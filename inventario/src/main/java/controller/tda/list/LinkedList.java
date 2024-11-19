@@ -266,6 +266,49 @@ public class LinkedList<E> {
         }
         return this;
     }
+
+    //REMOVE
+
+    protected void removeLast() throws ListEmptyException {
+        if (isEmpty()) {
+            throw new ListEmptyException("Error, no puede eliminar datos de una lista vacia.");
+        } else {
+            Node<E> nodo_last = getNode((getSize() - 2));
+            nodo_last.setNext(null);
+            this.last = nodo_last;
+            this.size--;
+        }
+    }
+
+    public void removeFirst() throws ListEmptyException {
+        if (isEmpty()) {
+            throw new ListEmptyException("Error, no puede eliminar datos de una lista vacia.");
+        } else {
+            Node<E> help = this.header;
+            Node<E> nextHeader = help.getNext();
+            this.header = nextHeader;
+            this.size--;
+        }
+    }
+
+    public void remove(int index) throws ListEmptyException, IndexOutOfBoundsException {
+        if (isEmpty()) {
+            throw new ListEmptyException("Lista vacia, no puede eliminar elementos");
+        } else if (index < 0 || index >= this.size) {
+            throw new IndexOutOfBoundsException("Índice fuera de límites: " + index);
+        } else if (index == 0) {
+            removeFirst();
+        } else if (index == (this.size - 1)) {
+            removeLast();
+        } else{
+                Node <E> nodoDeath = getNode(index);
+                Node <E> previousNode = getNode(index - 1);
+                previousNode.setNext(nodoDeath.getNext());
+                this.size --;
+        }
+
+        
+    }
     
     
     
