@@ -1,4 +1,4 @@
-package controller.Dao.implement;
+package controller.dao.implement;
 import controller.tda.list.LinkedList;
 
 public interface InterfazDao<T> {

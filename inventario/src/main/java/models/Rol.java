@@ -1,6 +1,6 @@
 package models;
 
-public class rol {
+public class Rol {
         private int idRol;
         private String nombre;
         private String descripcion;

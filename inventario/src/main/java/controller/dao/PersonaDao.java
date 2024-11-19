@@ -1,7 +1,7 @@
-package controller.Dao;
+package controller.dao;
 
 
-import controller.Dao.implement.AdapterDao;
+import controller.dao.implement.AdapterDao;
 import controller.tda.list.LinkedList;
 import models.Persona;
 public class PersonaDao extends AdapterDao<Persona> {

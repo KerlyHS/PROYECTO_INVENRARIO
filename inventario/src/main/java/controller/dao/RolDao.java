@@ -1,8 +1,8 @@
 package controller.dao;
 
-import controller.Dao.implement.AdapterDao;
+import controller.dao.implement.AdapterDao;
 import controller.tda.list.LinkedList;
-import models.rol;
+import models.Rol;
 
 public class RolDao extends AdapterDao<Rol> {
     private Rol rol;
@@ -35,7 +35,7 @@ public class RolDao extends AdapterDao<Rol> {
             throw new Exception("El rol no está configurado");
         }
         Integer id = getListAll().getSize() + 1;
-        getRol().setId(id); // Asigna un nuevo id al rol
+        getRol().setIdRol(id); // Asigna un nuevo id al rol
         persist(getRol()); // Guarda el rol en la base de datos
         return true;
     }
@@ -44,7 +44,7 @@ public class RolDao extends AdapterDao<Rol> {
         if (getRol() == null) {
             throw new Exception("El rol no está configurado");
         }
-        this.update(getRol()); // Actualiza el rol
+        // this.update(getRol()); // Actualiza el rol
         this.listAll = getListAll(); // Refresca la lista
         return true;
     }

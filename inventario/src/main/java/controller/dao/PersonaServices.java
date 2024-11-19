@@ -1,6 +1,6 @@
-package controller.Dao;
+package controller.dao;
 
-import controller.Dao.PersonaDao;
+import controller.dao.PersonaDao;
 import controller.tda.list.LinkedList;
 import models.Persona;
 
