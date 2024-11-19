@@ -1,4 +1,4 @@
-package controller.Dao.implement;
+package controller.dao.implement;
 
 import java.io.File;
 import java.io.FileReader;
@@ -103,5 +103,13 @@ public class AdapterDao<T> implements InterfazDao<T> {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    public Boolean supreme(int index) throws Exception {
+        LinkedList<T> list = listAll(); //Invoca el método listAll() para obtener la lista de objetos
+        list.remove(index); //Elimina el objeto en la posición index
+        String info = g.toJson(list.toArray()); //Convierte la lista en un String JSON
+        saveFile(info); //Guarda el String JSON en un archivo
+        return true; //Retorna verdadero si se eliminó correctamente
     }
 }
