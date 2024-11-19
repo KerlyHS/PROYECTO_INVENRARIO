@@ -1,7 +1,7 @@
-package controller.dao;
+package controller.Dao;
 
+import controller.Dao.PersonaDao;
 import controller.tda.list.LinkedList;
-import controller.dao.PersonaDao;
 import models.Persona;
 
 public class PersonaServices {
