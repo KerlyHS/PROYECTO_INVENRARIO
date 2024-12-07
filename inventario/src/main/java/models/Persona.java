@@ -7,10 +7,11 @@ public class Persona {
     private String correo;
     private String dni;
     private String clave;
+    private String token;
 
 
     
-    public Persona(Integer idPersona, String nombre, String apellido, String telefono, String correo, String dni, String clave) {
+    public Persona(Integer idPersona, String nombre, String apellido, String telefono, String correo, String dni, String clave, String token) {
         this.idPersona = idPersona;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -18,6 +19,7 @@ public class Persona {
         this.correo = correo;
         this.dni = dni;
         this.clave = clave;
+        this.token = token;
     }
 
     public Integer getIdPersona() {
@@ -74,6 +76,14 @@ public class Persona {
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Persona() {

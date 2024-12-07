@@ -2,7 +2,9 @@ package controller.dao;
 
 import controller.dao.PersonaDao;
 import controller.tda.list.LinkedList;
+import controller.tda.list.ListEmptyException;
 import models.Persona;
+
 
 public class PersonaServices {
     private PersonaDao obj;
@@ -32,5 +34,10 @@ public class PersonaServices {
 
     public Persona get(Integer id) throws Exception {
         return obj.get(id);
+    }
+
+
+    public Boolean iniciosesion(String correo, String clave) throws ListEmptyException{
+        return obj.iniciosesion(correo, clave);
     }
 }
