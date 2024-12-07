@@ -89,3 +89,14 @@ def registro():
 @router.route('/formularegistro')
 def formularegistro():
     return render_template('modulologin/registro.html')
+
+# INICIO PRODUCTO
+
+@router.route('/producto/list')
+def list_person(msg=''):
+    r_producto = requests.get("http://localhost:8080/myapp/producto/list")
+    data_producto = r_producto.json()
+
+    print(data_producto)
+
+    return render_template('moduloproducto/producto.html', lista_producto=data_producto["data"])
