@@ -1,7 +1,7 @@
 {% extends "template.html" %}
 {% block content %}
 <div class="pagetitle text-center">
-    <h1>LISTADO DE PRODUCTOS</h1>
+    <h1>LISTADO DE LOTES</h1>
 </div>
 
 <!-- Bloque para mostrar mensajes de flash -->
@@ -37,21 +37,37 @@
                             style="max-width: 1000px;">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Tipo de Producto</th>
+                                    <th>Nombre de producto</th>
                                     <th>Marca</th>
-                                    <th>Descripcion</th>
+                                    <th>Codigo de Lote</th>
+                                    <!-- <th>Precio</th> -->
+                                    <th>Cantidad</th>
+                                    <th>Precio Compra</th>
+                                    <th>Precio Venta</th>
+                                    <th>Fecha de Vencimiento</th>
+                                    <th>Fecha de Creacion</th>
+                                    <th>Descipcion de Lote</th>
+
+
+
                                     <!-- <th>Acciones</th> -->
 
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for item in lista_producto %}
+                                {% for item in lista_lote %}
                                 <tr>
-                                    <td>{{ item.nombre }}</td>
-                                    <td>{{ item.tipoProducto }}</td>
-                                    <td>{{ item.marca }}</td>
-                                    <td>{{ item.descripcion }}</td>
+                                    <td>{{ item.producto.nombre }}</td>
+                                    <td>{{ item.producto.marca }}</td>
+                                    <td>{{ item.codigoLote }}</td>
+                                    <!-- <td>{{ item.precioLote }}</td> -->
+                                    <td>{{ item.cantidad }}</td>
+                                    <td>{{ item.precioCompra }}</td>
+                                    <td>{{ item.precioVenta }}</td>
+                                    <td>{{ item.fechaVencimiento}}</td>
+                                    <td>{{ item.fechaCreacion}}</td>
+                                    <td>{{ item.descripcionLote }}</td>
+
                                     <!-- <td>
                                         <a href="/admin/familia/edit/{{ item.id }}" class="btn btn-info">MODIFICAR</a>
                                         <form action="/admin/familia/delete/{{ item.id }}" method="post"

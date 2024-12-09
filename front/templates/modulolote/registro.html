@@ -1,0 +1,90 @@
+{% extends "template.html" %}
+{% block content %}
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">REGISTRO</h1>
+        <nav class="breadcrumbs">
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+    <section class="section">
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-lg-8">
+                  <div class="card">
+                      <div class="card-body">
+                          <h5 class="card-title text-center">Bienvenido</h5>
+  
+                          <form class="row g-3 needs-validation" method="POST" action="/lote/save" novalidate>
+
+                              <div class="col-md-6">
+                                <label for="lblproducto" class="form-label">Producto</label>
+                                <select class="form-control" required name="produc">
+                                  {% for item in lista_producto %}
+                                  <option value="{{item.id}}">{{item.nombre}} - {{item.marca}}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+
+                              <div class="col-md-6">
+                                  <label for="dni" class="form-label">Codigo Lote</label>
+                                  <input type="text" class="form-control" id="codigoLote" name="codigol" required>
+                              </div>
+  
+                              <div class="col-md-6">
+                                  <label for="apellido" class="form-label">Precio Lote</label>
+                                  <input type="number" class="form-control" id="precioLote" name="preciol" required>
+                              </div>
+  
+                              <div class="col-md-6">
+                                  <label for="nombre" class="form-label">Cantidad</label>
+                                  <input type="text" class="form-control" id="cantidad" name="cant" required>
+                              </div>
+  
+                              <div class="col-md-6">
+                                  <label for="celular" class="form-label">Precio Compra</label>
+                                  <input type="number" class="form-control" id="precioCompra" name="precioc" required>
+                              </div>
+
+                              <div class="col-md-6">
+                                <label for="celular" class="form-label">Precio Venta</label>
+                                <input type="number" class="form-control" id="precioVenta" name="preciov" required>
+                              </div>
+
+                              <div class="col-md-6">
+                                <label for="celular" class="form-label">Fecha Vencimiento</label>
+                                <input type="date" class="form-control" id="fechaVencimiento" name="fechav" required>
+                               </div>
+
+                              <div class="col-md-6">
+                                <label for="celular" class="form-label">Fecha Creacion</label>
+                                <input type="date" class="form-control" id="fechaCreacion" name="fechac" required>
+                              </div>
+
+                              <div class="col-md-6">
+                                <label for="celular" class="form-label">Descripcion Lote</label>
+                                <input type="text" class="form-control" id="descripcionLote" name="descripcionl" required>
+                              </div>
+
+                              <!-- <div class="col-md-6">
+                                <label for="celular" class="form-label">Descripcion Lote</label>
+                                <input type="text" class="form-control" id="producto" name="produc" required>
+                              </div> -->
+
+                              <div class="col-12 text-center">
+                                  <button class="btn btn-success" type="submit">REGISTRAR</button>
+                                  <a href="/lote/list" class="btn btn-danger">CANCELAR</a>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+{% endblock %}

@@ -10,7 +10,6 @@ public class Producto {
     public Producto() {
     }
     
-    
     public Producto(Integer id, String tipoProducto, String nombre, String marca , String descripcion) {
         this.id = id;
         this.tipoProducto = tipoProducto;

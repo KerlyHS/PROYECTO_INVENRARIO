@@ -2,24 +2,27 @@ package models;
 
 public class Lote {
     private Integer id;
+    private String codigoLote;
     private float precioLote;
     private int cantidad;
     private float precioCompra;
     private float precioVenta;
-    private String fechaVen;
+    private String fechaVencimiento;
     private String fechaCreacion;
     private String descripcionLote;
+    private Integer id_Producto;
 
-    public Lote(Integer id, float precioLote, int cantidad, float precioCompra, float precioVenta, String fechaVen,
-            String fechaCreacion, String descripcionLote) {
+    public Lote(Integer id, float precioLote, int cantidad, float precioCompra, float precioVenta, String fechaVencimiento,
+            String fechaCreacion, String descripcionLote, Integer id_Producto) {
         this.id = id;
         this.precioLote = precioLote;
         this.cantidad = cantidad;
         this.precioCompra = precioCompra;
         this.precioVenta = precioVenta;
-        this.fechaVen = fechaVen;
+        this.fechaVencimiento = fechaVencimiento;
         this.fechaCreacion = fechaCreacion;
         this.descripcionLote = descripcionLote;
+        this.id_Producto = id_Producto;
     }
 
     public Lote() {
@@ -31,6 +34,14 @@ public class Lote {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCodigoLote() {
+        return codigoLote;
+    }
+
+    public void setCodigoLote(String codigoLote) {
+        this.codigoLote = codigoLote;
     }
 
     public float getPrecioLote() {
@@ -65,12 +76,12 @@ public class Lote {
         this.precioVenta = precioVenta;
     }
 
-    public String getFechaVen() {
-        return fechaVen;
+    public String getFechaVencimiento() {
+        return fechaVencimiento;
     }
 
-    public void setFechaVen(String fechaVen) {
-        this.fechaVen = fechaVen;
+    public void setFechaVencimiento(String fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
     }
 
     public String getFechaCreacion() {
@@ -89,8 +100,12 @@ public class Lote {
         this.descripcionLote = descripcionLote;
     }
 
-    
-    
+    public Integer getId_Producto() {
+        return id_Producto;
+    }
 
+    public void setId_Producto(Integer id_Producto) {
+        this.id_Producto = id_Producto;
+    }
    
 }
