@@ -142,4 +142,6 @@ public class AdapterDao<T> implements InterfazDao<T> {
         saveFile(info); // Guarda el String JSON en un archivo
         return true; // Retorna verdadero si se eliminó correctamente
     }
+
+    
 }
