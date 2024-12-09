@@ -1,5 +1,5 @@
 import json
-from flask import Flask, Blueprint, render_template, request, redirect, url_for, session
+from flask import Flask, Blueprint, flash, render_template, request, redirect, url_for, session
 import requests
 
 router = Blueprint('router', __name__)
@@ -89,3 +89,96 @@ def registro():
 @router.route('/formularegistro')
 def formularegistro():
     return render_template('modulologin/registro.html')
+
+# INICIO PRODUCTO
+
+@router.route('/producto/list')
+def list_producto(msg=''):
+    r_producto = requests.get("http://localhost:8080/myapp/producto/list")
+    data_producto = r_producto.json()
+
+    print(data_producto)
+
+    return render_template('moduloproducto/producto.html', lista_producto=data_producto["data"])
+
+@router.route('/lote/list')
+def list_lote(msg=''):
+    r_lote = requests.get("http://localhost:8080/myapp/lote/list")
+    data_lote = r_lote.json()
+
+    print(data_lote)
+
+    return render_template('modulolote/lote.html', lista_lote=data_lote["data"])
+
+@router.route('/lote/register')
+def view_register_lote():
+    r_lote = requests.get("http://localhost:8080/myapp/lote/list")
+    data_lote = r_lote.json()
+    r_producto = requests.get("http://localhost:8080/myapp/producto/list")
+    data_producto = r_producto.json()
+
+    return render_template('modulolote/registro.html', lista_lote=data_lote["data"],lista_producto=data_producto["data"])
+
+
+
+@router.route('/lote/save', methods=['POST'])
+def save_lote():
+    headers = {'Content-Type': 'application/json'}
+    form = request.form
+
+    data_lote = { 
+        "codigoLote": form["codigol"],
+        "precioLote": form["preciol"],
+        "cantidad": form["cant"],
+        "precioCompra": form["precioc"],
+        "precioVenta": form["preciov"],
+        "fechaVencimiento": form["fechav"],
+        "fechaCreacion": form["fechac"],
+        "descripcionLote": form["descripcionl"],
+        "producto": form["produc"],
+
+    }
+
+    r_lote = requests.post("http://localhost:8080/myapp/lote/save", data=json.dumps(data_lote), headers=headers)     # Hacer la petición para guardar la lote
+    
+
+    if r_lote.status_code == 200:
+
+        flash("Registro guardado correctamente", category='info')
+        return redirect('/lote/list')
+    else:
+        flash(r_lote.json().get("data", "Error al guardar la lote"), category='error')
+        return redirect('/familia/list')
+    
+
+@router.route('/producto/register')
+def view_register_producto():
+    r_producto = requests.get("http://localhost:8080/myapp/producto/list")
+    data_producto = r_producto.json()
+
+
+    return render_template('moduloproducto/registro.html',lista_producto=data_producto["data"])
+    
+@router.route('/producto/save', methods=['POST'])
+def save_producto():
+    headers = {'Content-Type': 'application/json'}
+    form = request.form
+
+    data_producto = { 
+        "nombre": form["nom"],
+        "tipoProducto": form["tipop"],
+        "marca": form["marca"],
+        "descripcion": form["descripcion"],
+
+    }
+
+    r_producto = requests.post("http://localhost:8080/myapp/producto/save", data=json.dumps(data_producto), headers=headers)     # Hacer la petición para guardar la producto
+    
+
+    if r_producto.status_code == 200:
+
+        flash("Registro guardado correctamente", category='info')
+        return redirect('/producto/list')
+    else:
+        flash(r_producto.json().get("data", "Error al guardar el producto"), category='error')
+        return redirect('/familia/list')

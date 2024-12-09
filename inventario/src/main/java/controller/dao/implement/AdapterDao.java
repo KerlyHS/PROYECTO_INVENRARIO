@@ -3,6 +3,7 @@ package controller.dao.implement;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.lang.reflect.Method;
 import java.util.Scanner;
 import com.google.gson.Gson;
 import controller.tda.list.LinkedList;
@@ -12,7 +13,8 @@ public class AdapterDao<T> implements InterfazDao<T> {
     private Gson g;
 
     // Cambiamos a una ruta absoluta en la raíz del proyecto
-    public static String filePath = "data/"; //src/main/java/Data/
+    public static String filePath = "data/"; // src/main/java/Data/
+
     public AdapterDao(Class<T> clazz) {
         this.clazz = clazz;
         this.g = new Gson();
@@ -25,15 +27,43 @@ public class AdapterDao<T> implements InterfazDao<T> {
 
     public T get(Integer id) throws Exception {
         LinkedList<T> list = listAll(); // Implementar según sea necesario
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             T[] matriz = list.toArray();
-            return matriz[id - 1];
+            for (int i = 0; i < matriz.length; i++) {
+                if (getIdent(matriz[i]).intValue() == id.intValue()) {
+                    return matriz[i];
+                }
+            }
         }
         return null;
     }
 
+    private Integer getIdent(T obj) {
+        try {
+            Method method = null;
+            for (Method m : clazz.getMethods()) {
+                if (m.getName().equalsIgnoreCase("getId")) {
+                    method = m;
+                    break;
+                }
+            }
+            if (method == null) {
+                for (Method m : clazz.getSuperclass().getMethods()) {
+                    if (m.getName().equalsIgnoreCase("getId")) {
+                        method = m;
+                        break;
+                    }
+                }
+            }
+            if (method != null)
+                return (Integer) method.invoke(obj);
+        } catch (Exception e) {
+            return -1;
+        }
+        return -1;
+    }
 
-//to_list
+    // to_list
     public LinkedList<T> listAll() {
         LinkedList<T> list = new LinkedList<>();
         try {
@@ -106,10 +136,12 @@ public class AdapterDao<T> implements InterfazDao<T> {
     }
 
     public Boolean supreme(int index) throws Exception {
-        LinkedList<T> list = listAll(); //Invoca el método listAll() para obtener la lista de objetos
-        list.remove(index); //Elimina el objeto en la posición index
-        String info = g.toJson(list.toArray()); //Convierte la lista en un String JSON
-        saveFile(info); //Guarda el String JSON en un archivo
-        return true; //Retorna verdadero si se eliminó correctamente
+        LinkedList<T> list = listAll(); // Invoca el método listAll() para obtener la lista de objetos
+        list.remove(index); // Elimina el objeto en la posición index
+        String info = g.toJson(list.toArray()); // Convierte la lista en un String JSON
+        saveFile(info); // Guarda el String JSON en un archivo
+        return true; // Retorna verdadero si se eliminó correctamente
     }
+
+    
 }
