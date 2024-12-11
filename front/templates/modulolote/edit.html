@@ -1,0 +1,78 @@
+{% extends "template.html" %}
+{% block content %}
+
+<main class="main">
+
+  <!-- Page Title -->
+  <div class="page-title">
+    <div class="container d-lg-flex justify-content-between align-items-center">
+      <h1 class="mb-2 mb-lg-0">MODIFICAR</h1>
+      <nav class="breadcrumbs">
+      </nav>
+    </div>
+  </div><!-- End Page Title -->
+  <section class="section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-center">Bienvenido</h5>
+              <form class="row g-3 needs-validation" method="POST" action="/lote/update" novalidate>
+
+                <input type="hidden" name="id" value="{{lote.id}}">
+
+                <div class="col-md-6">
+                  <label for="dni" class="form-label">Codigo Lote</label>
+                  <input type="text" class="form-control" id="codigoLote" name="codigol" required
+                    value="{{lote.codigoLote}}">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="nombre" class="form-label">Unidades</label>
+                  <input type="text" class="form-control" id="cantidad" name="cant" required value="{{lote.cantidad}}">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="celular" class="form-label">Precio Compra</label>
+                  <input type="number" class="form-control" id="precioCompra" name="precioc" required
+                    value="{{lote.precioCompra}}">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="celular" class="form-label">Precio Venta</label>
+                  <input type="number" class="form-control" id="precioVenta" name="preciov" required
+                    value="{{lote.precioVenta}}">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="celular" class="form-label">Fecha de Elaboracion</label>
+                  <input type="date" class="form-control" id="fechaCreacion" name="fechac" required
+                    value="{{lote.fechaCreacion}}">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="celular" class="form-label">Fecha de Vencimiento</label>
+                  <input type="date" class="form-control" id="fechaVencimiento" name="fechav" required
+                    value="{{lote.fechaVencimiento}}">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="celular" class="form-label">Descripcion Lote</label>
+                  <input type="text" class="form-control" id="descripcionLote" name="descripcionl" required
+                    value="{{lote.descripcionLote}}">
+                </div>
+
+                <div class="col-12 text-center">
+                  <button class="btn btn-success" type="submit">REGISTRAR</button>
+                  <a href="/lote/list" class="btn btn-danger">CANCELAR</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% endblock %}

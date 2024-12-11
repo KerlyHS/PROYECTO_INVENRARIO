@@ -18,7 +18,6 @@ public class LoteServicies {
                 HashMap mapa = new HashMap<>();
                 mapa.put("id", lista[i].getId());
                 mapa.put("codigoLote", lista[i].getCodigoLote());
-                mapa.put("precioLote", lista[i].getPrecioLote());
                 mapa.put("cantidad", lista[i].getCantidad());
                 mapa.put("precioCompra", lista[i].getPrecioCompra());
                 mapa.put("precioVenta", lista[i].getPrecioVenta());

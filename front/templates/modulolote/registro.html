@@ -22,7 +22,7 @@
                           <form class="row g-3 needs-validation" method="POST" action="/lote/save" novalidate>
 
                               <div class="col-md-6">
-                                <label for="lblproducto" class="form-label">Producto</label>
+                                <label for="lblproducto" classlote="form-label">Producto</label>
                                 <select class="form-control" required name="produc">
                                   {% for item in lista_producto %}
                                   <option value="{{item.id}}">{{item.nombre}} - {{item.marca}}</option>
@@ -36,12 +36,7 @@
                               </div>
   
                               <div class="col-md-6">
-                                  <label for="apellido" class="form-label">Precio Lote</label>
-                                  <input type="number" class="form-control" id="precioLote" name="preciol" required>
-                              </div>
-  
-                              <div class="col-md-6">
-                                  <label for="nombre" class="form-label">Cantidad</label>
+                                  <label for="nombre" class="form-label">Unidades</label>
                                   <input type="text" class="form-control" id="cantidad" name="cant" required>
                               </div>
   
@@ -56,24 +51,19 @@
                               </div>
 
                               <div class="col-md-6">
-                                <label for="celular" class="form-label">Fecha Vencimiento</label>
-                                <input type="date" class="form-control" id="fechaVencimiento" name="fechav" required>
-                               </div>
-
-                              <div class="col-md-6">
-                                <label for="celular" class="form-label">Fecha Creacion</label>
+                                <label for="celular" class="form-label">Fecha de Elaboracion</label>
                                 <input type="date" class="form-control" id="fechaCreacion" name="fechac" required>
                               </div>
+
+                              <div class="col-md-6">
+                                <label for="celular" class="form-label">Fecha de Vencimiento</label>
+                                <input type="date" class="form-control" id="fechaVencimiento" name="fechav" required>
+                               </div>
 
                               <div class="col-md-6">
                                 <label for="celular" class="form-label">Descripcion Lote</label>
                                 <input type="text" class="form-control" id="descripcionLote" name="descripcionl" required>
                               </div>
-
-                              <!-- <div class="col-md-6">
-                                <label for="celular" class="form-label">Descripcion Lote</label>
-                                <input type="text" class="form-control" id="producto" name="produc" required>
-                              </div> -->
 
                               <div class="col-12 text-center">
                                   <button class="btn btn-success" type="submit">REGISTRAR</button>

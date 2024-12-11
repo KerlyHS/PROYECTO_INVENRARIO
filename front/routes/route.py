@@ -128,7 +128,6 @@ def save_lote():
 
     data_lote = { 
         "codigoLote": form["codigol"],
-        "precioLote": form["preciol"],
         "cantidad": form["cant"],
         "precioCompra": form["precioc"],
         "precioVenta": form["preciov"],
@@ -148,8 +147,66 @@ def save_lote():
         return redirect('/lote/list')
     else:
         flash(r_lote.json().get("data", "Error al guardar la lote"), category='error')
-        return redirect('/familia/list')
+        return redirect('/lote/list')
+
+@router.route('/lote/update', methods=['POST'])
+def update_lote():
+    headers = {'Content-Type': 'application/json'}
+    form = request.form
+
+    data_lote = { 
+        "id": form["id"],
+        "codigoLote": form["codigol"],
+        "cantidad": form["cant"],
+        "precioCompra": form["precioc"],
+        "precioVenta": form["preciov"],
+        "fechaVencimiento": form["fechav"],
+        "fechaCreacion": form["fechac"],
+        "descripcionLote": form["descripcionl"],
+
+    }
+
+    r_lote = requests.post("http://localhost:8080/myapp/lote/update", data=json.dumps(data_lote), headers=headers)
     
+
+    if r_lote.status_code == 200:
+
+        flash("Registro guardado correctamente", category='info')
+        return redirect('/lote/list')
+    else:
+        flash(r_lote.json().get("data", "Error al guardar la lote"), category='error')
+        return redirect('/lote/list')
+    
+@router.route('/lote/edit/<id>', methods=['GET'])
+def view_edit_lote(id):
+
+
+    r = requests.get("http://localhost:8080/myapp/lote/listType")
+    lista_tipos = r.json()  # Guardamos la respuesta JSON
+
+    r1 = requests.get(f"http://localhost:8080/myapp/lote/get/{id}")     # Obtenemos los datos de la lote por ID
+
+
+    if r1.status_code == 200:
+        data_lote = r1.json()
+        lote = data_lote["data"]
+
+        return render_template('modulolote/edit.html', lista=lista_tipos["data"], lote=lote)
+
+    else:
+        flash("Error al obtener la lote", category='error')
+        return redirect("/admin/lote/list")
+
+
+
+@router.route('/lote/delete/<int:id>', methods=['POST'])
+def delete_lote(id):
+   
+    requests.post(f"http://localhost:8080/myapp/lote/delete/{id}")  
+       
+    return redirect('/lote/list')    # Redirigimos al usuario a la lista de lotes
+
+
 
 @router.route('/producto/register')
 def view_register_producto():
@@ -181,4 +238,57 @@ def save_producto():
         return redirect('/producto/list')
     else:
         flash(r_producto.json().get("data", "Error al guardar el producto"), category='error')
-        return redirect('/familia/list')
+        return redirect('lote/list')
+    
+@router.route('/producto/delete/<int:id>', methods=['POST'])
+def delete_producto(id):
+   
+    requests.post(f"http://localhost:8080/myapp/producto/delete/{id}")  
+       
+    return redirect('/producto/list')    # Redirigimos al usuario a la lista de productos
+
+
+@router.route('/producto/edit/<id>', methods=['GET'])
+def view_edit_producto(id):
+
+
+    r = requests.get("http://localhost:8080/myapp/producto/listType")
+    lista_tipos = r.json()  # Guardamos la respuesta JSON
+
+    r1 = requests.get(f"http://localhost:8080/myapp/producto/get/{id}")     # Obtenemos los datos de la producto por ID
+
+
+    if r1.status_code == 200:
+        data_producto = r1.json()
+        producto = data_producto["data"]
+
+        return render_template('moduloproducto/edit.html', lista=lista_tipos["data"], producto=producto)
+
+    else:
+        flash("Error al obtener la producto", category='error')
+        return redirect("/admin/producto/list")
+    
+
+@router.route('/producto/update', methods=['POST'])
+def update_producto():
+    headers = {'Content-Type': 'application/json'}
+    form = request.form
+
+    data_producto = { 
+        "id": form["id"],
+        "nombre": form["nom"],
+        "tipoProducto": form["tipop"],
+        "marca": form["marca"],
+        "descripcion": form["descripcion"],
+    }
+
+    r_producto = requests.post("http://localhost:8080/myapp/producto/update", data=json.dumps(data_producto), headers=headers)
+    
+
+    if r_producto.status_code == 200:
+
+        flash("Registro guardado correctamente", category='info')
+        return redirect('/producto/list')
+    else:
+        flash(r_producto.json().get("data", "Error al guardar la producto"), category='error')
+        return redirect('/producto/list')

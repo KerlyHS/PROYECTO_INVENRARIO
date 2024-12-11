@@ -133,7 +133,7 @@ public class ProductoApi {
     }
 
     @Path("/delete/{id}")
-    @DELETE
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteProducto(@PathParam("id") int id) {
         HashMap<String, Object> res = new HashMap<>();
@@ -141,7 +141,7 @@ public class ProductoApi {
         try {
             ProductoServicies fs = new ProductoServicies();
             
-            boolean ProductoDeleted = fs.delete(id - 1);       // Intentamos eliminar el Producto
+            boolean ProductoDeleted = fs.delete(id);       // Intentamos eliminar el Producto
 
             if (ProductoDeleted) {
                 res.put("message", "Producto y Generador eliminados exitosamente");

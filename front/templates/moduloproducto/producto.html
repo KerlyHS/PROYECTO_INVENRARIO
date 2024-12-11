@@ -41,7 +41,7 @@
                                     <th>Tipo de Producto</th>
                                     <th>Marca</th>
                                     <th>Descripcion</th>
-                                    <!-- <th>Acciones</th> -->
+                                    <th>Acciones</th>
 
                                 </tr>
                             </thead>
@@ -52,14 +52,14 @@
                                     <td>{{ item.tipoProducto }}</td>
                                     <td>{{ item.marca }}</td>
                                     <td>{{ item.descripcion }}</td>
-                                    <!-- <td>
-                                        <a href="/admin/familia/edit/{{ item.id }}" class="btn btn-info">MODIFICAR</a>
-                                        <form action="/admin/familia/delete/{{ item.id }}" method="post"
+                                    <td>
+                                        <a href="/producto/edit/{{ item.id }}" class="btn btn-info">MODIFICAR</a>
+                                        <form action="/producto/delete/{{ item.id }}" method="post"
                                             style="display:inline;">
                                             <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('¿Estás seguro de que deseas eliminar esta familia?');">ELIMINAR</button>
+                                                onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">ELIMINAR</button>
                                         </form>
-                                    </td> -->
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

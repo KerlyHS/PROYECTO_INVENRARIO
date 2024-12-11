@@ -4,6 +4,8 @@ import models.Lote;
 
 import controller.dao.implement.AdapterDao;
 import controller.tda.list.LinkedList;
+import com.google.gson.Gson;
+
 
 public class LoteDao extends AdapterDao<Lote> {
     private Lote lote = new Lote();
@@ -32,23 +34,64 @@ public class LoteDao extends AdapterDao<Lote> {
     }
 
     public Boolean save() throws Exception { // Guarda la variable lote en la lista de objetos
-        Integer id = getlistAll().getSize() + 1; // Obtiene el tamaño de la lista y le suma 1 para asignar un nuevo id
-        lote.setId(id); // Asigna el id a lote
+        Integer id = 0;
+        if (!getlistAll().isEmpty()) {
+            id = getlistAll().getLast().getId(); // Obtiene el tamaño de la lista y le suma 1 para asignar un nuevo id
+        }
+        lote.setId(id + 1); // Asigna el id a lote
         this.persist(this.lote); // Guarda la lote en la lista de objetos LinkedList y en el archivo JSON
         this.listAll = listAll(); // Actualiza la lista de objetos
         return true; // Retorna verdadero si se guardó correctamente
     }
 
     public Boolean update() throws Exception { // Actualiza el nodo Lote en la lista de objetos
-        this.merge(getLote(), getLote().getId() - 1); // Envia la lote a actualizar con su index
+        this.getlistAll();
+        this.mergeA(getLote(), recuperoIndex(lote.getId()) ); // Envia la lote a actualizar con su index
+        System.out.println("valor" + recuperoIndex(lote.getId()));
         this.listAll = listAll(); // Actualiza la lista de objetos
+        System.out.println("listaaa = " + listAll.toString());;
         return true;
     }
 
     public Boolean delete(int index) throws Exception { // Elimina un objeto Lote por su índice
-        this.supreme(index);
-        this.listAll = listAll(); // Actualiza la lista de objetos
+        Gson g = new Gson();
+        System.out.println("intentamos eliminar el elemento con id " +index);
+        this.listAll = listAll();
+        System.out.println("lista:" + this.listAll.toString());;
+        this.listAll.remove(recuperoIndex(index));
+        String info = g.toJson(this.listAll.toArray()); //Convierte la lista en un String JSON
+        super.saveFile(info);
         return true; // Retorna verdadero si se eliminó correctamente
     }
+
+    public Integer recuperoIndex (Integer id) {
+        Lote[] lista = listAll.toArray();
+        Integer count = 0;
+        System.out.println("Entramos acá " +id);
+        try {
+            for (int i = 0; i < lista.length; i++) {
+                if (lista[i].getId() != id) {
+                count++;
+                }else if (lista[i].getId() == id) {
+                    return count;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("borrado fallido");
+        }
+        return null;
+    }
+
+    // public Integer searchIndex (Integer id) {
+    //     Integer index = 0;
+    //     getlistAll();
+    //     Lote [] lista = listAll.toArray();
+    //     for (int i = 0; i < lista.length; i++) {
+    //         if (lista[i].getId() != id) {
+                
+    //         }
+    //     }
+    //     return index;
+    // }
 
 }
