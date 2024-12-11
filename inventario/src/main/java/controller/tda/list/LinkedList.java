@@ -1,5 +1,7 @@
 package controller.tda.list;
 
+import java.lang.reflect.Method;
+
 import controller.tda.list.LinkedList;
 
 public class LinkedList<E> {
@@ -75,8 +77,6 @@ public class LinkedList<E> {
         }
     }
 
-
-  
     public void update(E data, Integer post) throws ListEmptyException {
         if(isEmpty()) {
             throw new ListEmptyException("Error, la lista esta vacia");
@@ -96,6 +96,20 @@ public class LinkedList<E> {
             search.setInfo(data);
         }
 
+    }
+
+    public void updateA(E info, Integer index) throws ListEmptyException, IndexOutOfBoundsException {
+        if (isEmpty()) {
+            throw new ListEmptyException("La lista está vacía");
+        }
+
+        if (index < 0 || index >= this.size) {
+            throw new IndexOutOfBoundsException("Índice fuera de límites");
+        }
+
+        // Obtener el nodo en la posición dada
+        Node<E> help = getNode(index);
+        help.setInfo(info); 
     }
     
 
@@ -159,10 +173,6 @@ public class LinkedList<E> {
         }
     }
 
-
-
-
-
     private E getFirst() throws ListEmptyException {
         if (isEmpty()) {
             throw new ListEmptyException("Error, lista vacia");
@@ -219,8 +229,6 @@ public class LinkedList<E> {
     }
     
 
-    //nos permite los datos de una lista 
-    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("List data");
         try {
@@ -310,6 +318,120 @@ public class LinkedList<E> {
         
     }
     
-    
-    
+    public LinkedList<E> mergeSort(String attribute, Integer type) throws Exception {
+        if (!isEmpty()) {
+            E[] lista = this.toArray();
+            lista = mergeSortAliado(lista, attribute, type);
+            this.toList(lista);
+        }
+        return this;
+    }
+
+    private E[] mergeSortAliado(E[] arreglo, String attribute, Integer type) throws Exception {
+        if (arreglo.length < 2) {
+            return arreglo;
+        } else {
+
+            int mid = arreglo.length / 2;
+            E[] izquierda = copiarRangoArray(arreglo, 0, mid);
+            E[] derecha = copiarRangoArray(arreglo, mid, arreglo.length);
+
+            izquierda = mergeSortAliado(izquierda, attribute, type);
+            derecha = mergeSortAliado(derecha, attribute, type);
+
+            return merge(izquierda, derecha, attribute, type);
+        }
+    }
+
+    private E[] copiarRangoArray(E[] arreglo, int inicio, int fin) {
+        int length = fin - inicio;
+        E[] nuevoArreglo = (E[]) new Object[length];
+        for (int i = 0; i < length; i++) {
+            nuevoArreglo[i] = arreglo[inicio + i];
+        }
+        return nuevoArreglo;
+    }
+
+    private E[] merge(E[] izquierda, E[] derecha, String attribute, Integer type) throws Exception {
+        E[] resultado = (E[]) new Object[izquierda.length + derecha.length];
+        int i = 0, j = 0, k = 0;
+
+        while (i < izquierda.length && j < derecha.length) {
+            if (attribute_compare(attribute, izquierda[i], derecha[j], type)) {
+                resultado[k++] = derecha[j++];      //Recordatorio: k++ pasa primero k y luego incrementa ++
+            } else {
+                resultado[k++] = izquierda[i++];
+
+            }
+        }
+        while (i < izquierda.length) {  //Elementos que aún no hemos agregado
+            resultado[k++] = izquierda[i++];
+        }
+        while (j < derecha.length) {
+            resultado[k++] = derecha[j++];
+        }
+
+        return resultado;
+    }
+
+    private Boolean compare(Object a, Object b, Integer type) {
+        switch (type) {
+            case 0:
+                // System.out.println("Estamos ordenando ascendentemente ");
+                if (a instanceof Boolean && b instanceof Boolean) {
+                    return (Boolean) a && !(Boolean) b;
+                } else if (a instanceof Number) {
+                    Number a1 = (Number) a;
+                    Number b1 = (Number) b;
+                    return a1.doubleValue() > b1.doubleValue();
+                } else {
+                    return (a.toString().toUpperCase()).compareTo(b.toString().toUpperCase()) > 0;
+                }
+
+            default:
+                // System.out.println("Estamos ordenando de descendentemente");
+                if (a instanceof Boolean && b instanceof Boolean) {
+                    return !(Boolean) a && (Boolean) b;
+                } else if (a instanceof Number) {
+                    Number a1 = (Number) a;
+                    Number b1 = (Number) b;
+                    return a1.doubleValue() < b1.doubleValue();
+                } else {
+                    return (a.toString().toUpperCase()).compareTo(b.toString().toUpperCase()) < 0;
+                }
+        }
+    }
+
+    private Boolean attribute_compare(String attribute, E a, E b, Integer type) throws Exception {
+        return compare(exist_attribute(a, attribute), exist_attribute(b, attribute), type);
+    }
+
+    private Object exist_attribute(E a, String attribute) throws Exception {
+        Method method = null;
+        attribute = attribute.substring(0, 1).toUpperCase() + attribute.substring(1);
+        attribute = "get" + attribute;
+        for (Method aux : a.getClass().getMethods()) {
+            if (aux.getName().contains(attribute)) {
+                method = aux;
+                break;
+            }
+
+        }
+        if (method == null) {
+            for (Method aux : a.getClass().getSuperclass().getMethods()) {
+                if (aux.getName().contains(attribute)) {
+                    method = aux;
+                    break;
+                }
+
+            }
+
+        }
+        if (method != null) {
+            return method.invoke(a);
+        }
+
+        return null;
+    }
+
 }

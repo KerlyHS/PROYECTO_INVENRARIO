@@ -71,7 +71,7 @@ public class AdapterDao<T> implements InterfazDao<T> {
             T[] matrix = g.fromJson(data, com.google.gson.reflect.TypeToken.getArray(clazz).getType());
             list.toList(matrix);
         } catch (Exception e) {
-            System.out.println("Error al leer la lista: " + e.getMessage());
+            System.out.println("Error al leer la lista listAll: " + e.getMessage());
             e.printStackTrace();
         }
         return list;
@@ -80,6 +80,13 @@ public class AdapterDao<T> implements InterfazDao<T> {
     public void merge(T object, Integer index) throws Exception {
         LinkedList<T> list = listAll();
         list.update(object, index);
+        String info = g.toJson(list.toArray());
+        saveFile(info);
+    }
+
+    public void mergeA(T object, Integer index) throws Exception {
+        LinkedList<T> list = listAll();
+        list.updateA(object, index);
         String info = g.toJson(list.toArray());
         saveFile(info);
     }
@@ -115,7 +122,7 @@ public class AdapterDao<T> implements InterfazDao<T> {
         return sb.toString().trim();
     }
 
-    private void saveFile(String data) throws Exception {
+    protected void saveFile(String data) throws Exception {
         File file = new File(filePath + clazz.getSimpleName() + ".json");
         file.getParentFile().mkdirs();
 
@@ -138,10 +145,10 @@ public class AdapterDao<T> implements InterfazDao<T> {
     public Boolean supreme(int index) throws Exception {
         LinkedList<T> list = listAll(); // Invoca el método listAll() para obtener la lista de objetos
         list.remove(index); // Elimina el objeto en la posición index
+        System.out.println("lista después de eliminar " + list.toString());
         String info = g.toJson(list.toArray()); // Convierte la lista en un String JSON
         saveFile(info); // Guarda el String JSON en un archivo
         return true; // Retorna verdadero si se eliminó correctamente
     }
-
     
 }

@@ -3,7 +3,6 @@ package models;
 public class Lote {
     private Integer id;
     private String codigoLote;
-    private float precioLote;
     private int cantidad;
     private float precioCompra;
     private float precioVenta;
@@ -12,10 +11,9 @@ public class Lote {
     private String descripcionLote;
     private Integer id_Producto;
 
-    public Lote(Integer id, float precioLote, int cantidad, float precioCompra, float precioVenta, String fechaVencimiento,
+    public Lote(Integer id, int cantidad, float precioCompra, float precioVenta, String fechaVencimiento,
             String fechaCreacion, String descripcionLote, Integer id_Producto) {
         this.id = id;
-        this.precioLote = precioLote;
         this.cantidad = cantidad;
         this.precioCompra = precioCompra;
         this.precioVenta = precioVenta;
@@ -42,14 +40,6 @@ public class Lote {
 
     public void setCodigoLote(String codigoLote) {
         this.codigoLote = codigoLote;
-    }
-
-    public float getPrecioLote() {
-        return precioLote;
-    }
-
-    public void setPrecioLote(float precioLote) {
-        this.precioLote = precioLote;
     }
 
     public int getCantidad() {
@@ -108,4 +98,7 @@ public class Lote {
         this.id_Producto = id_Producto;
     }
    
+    public String toString() {
+        return "Producto{id='"+ id + "', codigoLote='" + codigoLote + "', id_Producto='" + id_Producto +"}";
+    }
 }

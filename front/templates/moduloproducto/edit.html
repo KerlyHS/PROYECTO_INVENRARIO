@@ -1,0 +1,60 @@
+{% extends "template.html" %}
+{% block content %}
+
+<main class="main">
+
+  <!-- Page Title -->
+  <div class="page-title">
+    <div class="container d-lg-flex justify-content-between align-items-center">
+      <h1 class="mb-2 mb-lg-0">MODIFICAR</h1>
+      <nav class="breadcrumbs">
+      </nav>
+    </div>
+  </div><!-- End Page Title -->
+  <section class="section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-center">Bienvenido</h5>
+              <form class="row g-3 needs-validation" method="POST" action="/producto/update" novalidate>
+
+                <input type="hidden" name="id" value="{{producto.id}}">
+
+                <div class="col-md-6">
+                  <label for="dni" class="form-label">Nombre</label>
+                  <input type="text" class="form-control" id="nombre" name="nom" required
+                    value="{{producto.nombre}}">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="apellido" class="form-label">Tipo Producto</label>
+                  <input type="text" class="form-control" id="tipoProducto" name="tipop" required
+                    value="{{producto.tipoProducto}}">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="nombre" class="form-label">Marca</label>
+                  <input type="text" class="form-control" id="marc" name="marca" required value="{{producto.marca}}">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="celular" class="form-label">Descripcion</label>
+                  <input type="text" class="form-control" id="descr" name="descripcion" required
+                    value="{{producto.descripcion}}">
+                </div>
+
+                <div class="col-12 text-center">
+                  <button class="btn btn-success" type="submit">REGISTRAR</button>
+                  <a href="/producto/list" class="btn btn-danger">CANCELAR</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% endblock %}

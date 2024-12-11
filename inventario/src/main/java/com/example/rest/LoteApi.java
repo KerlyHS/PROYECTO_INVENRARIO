@@ -82,7 +82,6 @@ public class LoteApi {
             ProductoServicies productoServicies = new ProductoServicies();
             productoServicies.setProducto(productoServicies.get(Integer.parseInt(map.get("producto").toString())));
             ls.getLote().setCodigoLote(map.get("codigoLote").toString());
-            ls.getLote().setPrecioLote(Float.parseFloat(map.get("precioLote").toString()));
             ls.getLote().setCantidad(Integer.parseInt(map.get("cantidad").toString()));
             ls.getLote().setPrecioCompra(Float.parseFloat(map.get("precioCompra").toString()));
             ls.getLote().setPrecioVenta(Float.parseFloat(map.get("precioVenta").toString()));
@@ -90,7 +89,7 @@ public class LoteApi {
             ls.getLote().setFechaCreacion(map.get("fechaCreacion").toString());
             ls.getLote().setDescripcionLote(map.get("descripcionLote").toString());
             ls.getLote().setId_Producto(productoServicies.getProducto().getId());
-
+            System.out.println("llegamoooos");
             ls.save();
 
             res.put("msg", "Ok");
@@ -115,12 +114,13 @@ public class LoteApi {
         try {
 
             LoteServicies ls = new LoteServicies();
+            ls.setLote(ls.get(Integer.parseInt(map.get("id").toString())));
+            System.out.println(ls.getLote().getId());
             ls.getLote().setCodigoLote(map.get("codigoLote").toString());
-            ls.getLote().setPrecioLote(Float.parseFloat(map.get("precioLote").toString()));
             ls.getLote().setCantidad(Integer.parseInt(map.get("cantidad").toString()));
             ls.getLote().setPrecioCompra(Float.parseFloat(map.get("precioCompra").toString()));
             ls.getLote().setPrecioVenta(Float.parseFloat(map.get("precioVenta").toString()));
-            ls.getLote().setFechaVencimiento(map.get("fechaVen").toString());
+            ls.getLote().setFechaVencimiento(map.get("fechaVencimiento").toString());
             ls.getLote().setFechaCreacion(map.get("fechaCreacion").toString());
             ls.getLote().setDescripcionLote(map.get("descripcionLote").toString());
     
@@ -151,7 +151,8 @@ public class LoteApi {
     }
 
     @Path("/delete/{id}")
-    @DELETE
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteLote(@PathParam("id") int id) {
         HashMap<String, Object> res = new HashMap<>();
@@ -159,16 +160,17 @@ public class LoteApi {
         try {
             LoteServicies fs = new LoteServicies();
             
-            boolean LoteDeleted = fs.delete(id - 1);       // Intentamos eliminar el Lote
+            boolean LoteDeleted = fs.delete(id);       // Intentamos eliminar el Lote
 
-            if (LoteDeleted) {
-                res.put("message", "Lote y Generador eliminados exitosamente");
-                return Response.ok(res).build();
+            if (!LoteDeleted) {
+
+                res.put("message", "Lote no encontrada o no eliminada");     // Si no se eliminó, enviar un error 404
+                return Response.status(Response.Status.NOT_FOUND).entity(res).build();
 
             } else {
             
-                res.put("message", "Lote no encontrada o no eliminada");     // Si no se eliminó, enviar un error 404
-                return Response.status(Response.Status.NOT_FOUND).entity(res).build();
+                res.put("message", "Lote eliminados exitosamente");
+                return Response.ok(res).build();
 
             }
         } catch (Exception e) {
